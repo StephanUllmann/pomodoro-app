@@ -1,0 +1,72 @@
+.timer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 40rem;
+  min-width: 40rem;
+  border-radius: 50%;
+  filter: drop-shadow(-5rem -5rem 10rem var(--color-shadow-top));
+  position: relative;
+  cursor: pointer;
+  transition: all 0.2s;
+
+  &:hover {
+    filter: drop-shadow(-5.5rem -5.5rem 12rem var(--color-shadow-top));
+    filter: brightness(1.075);
+    transition: all 0.2s;
+
+    &::after {
+      filter: drop-shadow(5.5rem 5.5rem 12rem var(--color-shadow-bottom));
+      //   filter: brightness(1.1);
+      transition: all 0.2s;
+    }
+
+    & .timer__inner {
+      filter: brightness(1.075);
+      transition: all 0.2s;
+    }
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    background-image: linear-gradient(to right bottom, #0e112a, #2e325a);
+    height: 100%;
+    width: 100%;
+    border-radius: 50%;
+    filter: drop-shadow(5rem 5rem 10rem var(--color-shadow-bottom));
+    z-index: -10;
+    transition: all 0.2s;
+  }
+
+  &__inner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 89%;
+    width: 89%;
+    border-radius: 50%;
+    background-color: var(--color-primary-dark);
+    position: relative;
+    transition: all 0.2s;
+  }
+
+  &__circle {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    stroke: var(--color-theme);
+    stroke-width: 1rem;
+    stroke-linecap: round;
+    fill: none;
+  }
+
+  &__time {
+    text-align: center;
+  }
+
+  &__status {
+    text-align: center;
+  }
+}

@@ -1,0 +1,194 @@
+:root {
+  --color-primary: #1e213f;
+  --color-primary-dark: #161932;
+  --color-font-display: #d7e0ff;
+  --color-font-display-active: var(--color-primary);
+  --color-settings-bg: #fff;
+  --color-font-settings: #161932;
+  --color-font-settings-sec: #1e213f;
+  --color-settings-btn: #f87070;
+  --color-settings-stroke: #e3e1e1;
+  --color-settings-themes-1: #f87070;
+  --color-settings-themes-2: #70f3f8;
+  --color-settings-themes-3: #d881f8;
+  --color-shadow-top: #272c5a;
+  --color-shadow-bottom: #121530;
+  --alpha: 0.4; }
+
+.theme-1 {
+  --color-theme: #f87070; }
+
+.theme-2 {
+  --color-theme: #70f3f8; }
+
+.theme-3 {
+  --color-themes: #d881f8; }
+
+.font-1 {
+  font-family: "Kumbh Sans", sans-serif; }
+
+.font-2 {
+  font-family: "Roboto Slab", serif; }
+
+.font-3 {
+  font-family: "Space Mono", monospace; }
+
+.heading-1 {
+  font-size: 9.5rem;
+  letter-spacing: -0.5rem;
+  display: inline-block; }
+
+.heading-2 {
+  display: inline-block;
+  font-size: 2.8rem; }
+
+.heading-3 {
+  font-size: 1.6rem;
+  letter-spacing: 1.5rem;
+  text-transform: uppercase;
+  display: inline-block; }
+
+.heading-4 {
+  font-size: 1.3rem;
+  letter-spacing: 0.5rem;
+  text-transform: uppercase;
+  display: inline-block; }
+
+.body-1 {
+  display: inline-block;
+  font-size: 1.4rem; }
+
+.body-2 {
+  display: inline-block;
+  font-size: 1.2rem; }
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+  padding: 0;
+  margin: 0; }
+
+html {
+  box-sizing: border-box;
+  font-size: 62.5%; }
+
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  background-color: var(--color-primary);
+  height: 100vh;
+  color: var(--color-font-display);
+  position: relative; }
+
+.header__logo {
+  width: 15.3rem;
+  height: 3.2rem;
+  fill: #d7e0ff; }
+
+.hidden {
+  display: none; }
+
+.modus-switch {
+  display: flex;
+  padding: 0.7rem;
+  background-color: var(--color-primary-dark);
+  border-radius: 42rem; }
+  .modus-switch__btn {
+    padding: 1.8rem 2.3rem;
+    background-color: var(--color-primary-dark);
+    border-radius: 42rem;
+    color: rgba(215, 224, 255, 0.4);
+    cursor: pointer;
+    transition: all 0.2s; }
+    .modus-switch__btn:hover {
+      filter: brightness(1.2); }
+    .modus-switch__btn--active {
+      background-color: var(--color-theme);
+      color: var(--color-primary); }
+
+.timer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 40rem;
+  min-width: 40rem;
+  border-radius: 50%;
+  filter: drop-shadow(-5rem -5rem 10rem var(--color-shadow-top));
+  position: relative;
+  cursor: pointer;
+  transition: all 0.2s; }
+  .timer:hover {
+    filter: drop-shadow(-5.5rem -5.5rem 12rem var(--color-shadow-top));
+    filter: brightness(1.075);
+    transition: all 0.2s; }
+    .timer:hover::after {
+      filter: drop-shadow(5.5rem 5.5rem 12rem var(--color-shadow-bottom));
+      transition: all 0.2s; }
+    .timer:hover .timer__inner {
+      filter: brightness(1.075);
+      transition: all 0.2s; }
+  .timer::after {
+    content: "";
+    position: absolute;
+    background-image: linear-gradient(to right bottom, #0e112a, #2e325a);
+    height: 100%;
+    width: 100%;
+    border-radius: 50%;
+    filter: drop-shadow(5rem 5rem 10rem var(--color-shadow-bottom));
+    z-index: -10;
+    transition: all 0.2s; }
+  .timer__inner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 89%;
+    width: 89%;
+    border-radius: 50%;
+    background-color: var(--color-primary-dark);
+    position: relative;
+    transition: all 0.2s; }
+  .timer__circle {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    stroke: var(--color-theme);
+    stroke-width: 1rem;
+    stroke-linecap: round;
+    fill: none; }
+  .timer__time {
+    text-align: center; }
+  .timer__status {
+    text-align: center; }
+
+.settings__icon {
+  width: 2.8rem;
+  height: 2.8rem;
+  fill: #d7e0ff;
+  opacity: 0.5;
+  cursor: pointer; }
+  .settings__icon:hover {
+    filter: brightness(1.1); }
+
+.settings__menu {
+  position: absolute;
+  background-color: var(--color-settings-bg);
+  border-radius: 1.5rem;
+  inset: 0 0 0 0;
+  width: 30rem;
+  height: 40rem;
+  margin: auto auto;
+  z-index: 10; }
+
+.overlay {
+  position: absolute;
+  width: 100dvw;
+  height: 100dvh;
+  inset: 0 0 0 0;
+  background-color: rgba(10, 12, 28, 0.5);
+  -webkit-backdrop-filter: blur(2px);
+  backdrop-filter: blur(2px);
+  z-index: 5; }
