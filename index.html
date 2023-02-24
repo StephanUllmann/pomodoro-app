@@ -26,13 +26,13 @@
       <svg class="header__logo"><use href="#logo"></use></svg>
     </header>
     <nav class="modus-switch">
-      <div class="modus-switch__btn modus-switch__btn--active">
+      <div class="btn btn--active">
         <p class="body-1">pomodoro</p>
       </div>
-      <div class="modus-switch__btn">
+      <div class="btn">
         <p class="body-1">short break</p>
       </div>
-      <div class="modus-switch__btn">
+      <div class="btn">
         <p class="body-1">long break</p>
       </div>
     </nav>
@@ -47,7 +47,13 @@
         </div>
         <div class="timer__status">
           <!-- start pause restart -->
-          <h3 class="heading-3">pause</h3>
+          <h3 class="heading-3" id="timer__status">restart</h3>
+          <audio preload="auto" class="timer__audio">
+            <source
+              src="./assets/singing-bowl-strike-sound-84682.mp3"
+              type="audio/aac"
+            />
+          </audio>
         </div>
       </div>
     </main>
@@ -55,103 +61,200 @@
     <nav class="settings">
       <svg class="settings__icon"><use href="#settings"></use></svg>
 
-      <div class="settings__menu hidden">
-        <h2 class="heading-2">Settings</h2>
-        <svg class="icons"><use href="#icon-close"></use></svg>
-        <form action="#" class="settings__menu__form">
-          <fieldset class="settings__menu__times">
-            <legend class="heading-4">Time (minutes)</legend>
-            <div class="settings__menu__form-group">
-              <label for="pomodoro-time" class="body-2">pomodoro</label>
-              <input
-                type="number"
-                name="pomodoro-time"
-                id="pomodoro-time"
-                class="settings__menu__time-input"
-                value="25"
-                min="15"
-                max="45"
-                list="reasonable-pomodoros"
-              />
+      <div class="hidden" id="settings-hide">
+        <div class="settings__menu">
+          <div
+            class="settings__menu__form-group settings__menu__form-group--heading"
+          >
+            <h2 class="settings__menu-heading heading-2">Settings</h2>
+            <svg class="settings__menu-close icons">
+              <use href="#icon-close"></use>
+            </svg>
+          </div>
+          <form action="#" class="settings__menu__form">
+            <fieldset
+              class="settings__menu__form-group settings__menu__form-group-1"
+            >
+              <div
+                class="settings__menu__form-legend heading-4"
+                id="times-heading"
+              >
+                Time (minutes)
+              </div>
+              <div class="relative time-1">
+                <label
+                  id="pomodoro-time-label"
+                  for="pomodoro-time"
+                  class="settings__menu__time-label body-2"
+                  >pomodoro</label
+                >
+                <input
+                  type="number"
+                  name="pomodoro-time"
+                  id="pomodoro-time"
+                  class="settings__menu__time-input"
+                  value="25"
+                  min="15"
+                  max="45"
+                  list="reasonable-pomodoros"
+                />
+                <svg class="icons" id="pomodoro-up">
+                  <use href="#icon-arrow-up"></use>
+                </svg>
+                <svg class="icons" id="pomodoro-down">
+                  <use href="#icon-arrow-down"></use>
+                </svg>
+              </div>
               <!-- <datalist id="reasonable-pomodoros">
                 <option value="25"></option>
                 <option value="20"></option>
                 <option value="30"></option>
               </datalist> -->
-            </div>
-            <div class="settings__menu__form-group">
-              <label for="short-break" class="body-2">short break</label>
-              <input
-                type="number"
-                name="short-break"
-                id="short-break"
-                class="settings__menu__time-input"
-                value="5"
-                min="1"
-                max="10"
-                list="reasonable-short-breaks"
-              />
+              <!-- </div> -->
+              <!-- <div class="settings__menu__number-group"> -->
+              <div class="relative time-2">
+                <label
+                  id="short-break-label"
+                  for="short-break"
+                  class="settings__menu__time-label body-2"
+                  >short break</label
+                >
+                <input
+                  type="number"
+                  name="short-break"
+                  id="short-break"
+                  class="settings__menu__time-input"
+                  value="5"
+                  min="1"
+                  max="10"
+                  list="reasonable-short-breaks"
+                />
+                <svg class="icons" id="short-break-up">
+                  <use href="#icon-arrow-up"></use>
+                </svg>
+                <svg class="icons" id="short-break-down">
+                  <use href="#icon-arrow-down"></use>
+                </svg>
+              </div>
               <!-- <datalist id="reasonable-short-breaks">
                 <option value="5"></option>
                 <option value="3"></option>
                 <option value="7"></option>
               </datalist> -->
-            </div>
-            <div class="settings__menu__form-group">
-              <label for="long-break" class="body-2">long break</label>
-              <input
-                type="number"
-                name="long-break"
-                id="long-break"
-                class="settings__menu__time-input"
-                value="15"
-                min="10"
-                max="20"
-                list="reasonable-long-breaks"
-              />
+              <div class="relative time-3">
+                <label
+                  id="long-break-label"
+                  for="long-break"
+                  class="settings__menu__time-label body-2"
+                  >long break</label
+                >
+                <input
+                  type="number"
+                  name="long-break"
+                  id="long-break"
+                  class="settings__menu__time-input"
+                  value="15"
+                  min="10"
+                  max="20"
+                  list="reasonable-long-breaks"
+                />
+                <svg class="icons" id="short-break-up">
+                  <use href="#icon-arrow-up"></use>
+                </svg>
+                <svg class="icons" id="short-break-down">
+                  <use href="#icon-arrow-down"></use>
+                </svg>
+              </div>
               <!-- <datalist id="reasonable-long-breaks">
                 <option value="15"></option>
                 <option value="13"></option>
                 <option value="17"></option>
               </datalist> -->
-            </div>
-          </fieldset>
-          <fieldset class="settings__menu__form-group">
-            <legend class="heading-4">Font</legend>
-            <label for="font-btn-1" class="font-label font-1">Aa</label>
-            <input
-              type="radio"
-              name="fonts"
-              id="font-btn-1"
-              value="1"
-              checked
-            />
+            </fieldset>
+            <fieldset class="settings__menu__form-group">
+              <legend class="settings__menu__form-legend heading-4">
+                Font
+              </legend>
+              <div class="settings__menu__radio-group">
+                <input
+                  class="settings__menu__radio-btn"
+                  type="radio"
+                  name="fonts"
+                  id="font-btn-1"
+                  value="1"
+                  checked
+                />
+                <label for="font-btn-1" class="font-label font-label font-1"
+                  >Aa</label
+                >
 
-            <label for="font-btn-2" class="font-label font-2">Aa</label>
-            <input type="radio" name="fonts" id="font-btn-2" value="2" />
+                <input
+                  class="settings__menu__radio-btn"
+                  type="radio"
+                  name="fonts"
+                  id="font-btn-2"
+                  value="2"
+                />
+                <label for="font-btn-2" class="font-label font-label font-2"
+                  >Aa</label
+                >
 
-            <label for="font-btn-3" class="font-label font-3">Aa</label>
-            <input type="radio" name="fonts" id="font-btn-3" value="3" />
-          </fieldset>
-          <fieldset class="settings__menu__form-group">
-            <legend class="heading-4">Color</legend>
-            <label for="color-btn-1" class="color-label color-1">Aa</label>
-            <input
-              type="radio"
-              name="colors"
-              id="color-btn-1"
-              value="1"
-              checked
-            />
+                <input
+                  class="settings__menu__radio-btn"
+                  type="radio"
+                  name="fonts"
+                  id="font-btn-3"
+                  value="3"
+                />
+                <label for="font-btn-3" class="font-label font-label font-3"
+                  >Aa</label
+                >
+              </div>
+            </fieldset>
 
-            <label for="color-btn-2" class="color-label color-2">Aa</label>
-            <input type="radio" name="colors" id="color-btn-2" value="2" />
+            <fieldset class="settings__menu__form-group">
+              <legend class="settings__menu__form-legend heading-4">
+                Color
+              </legend>
+              <div class="settings__menu__radio-group">
+                <input
+                  class="settings__menu__radio-btn settings__menu__radio-btn--color"
+                  type="radio"
+                  name="colors"
+                  id="color-btn-1"
+                  value="1"
+                  checked
+                />
+                <label for="color-btn-1" class="color-label color-label-1">
+                  <svg class="icons"><use href="#check"></use></svg>
+                </label>
 
-            <label for="color-btn-3" class="color-label color-3">Aa</label>
-            <input type="radio" name="colors" id="color-btn-3" value="3" />
-          </fieldset>
-          <button class="settings__button heading-4">Apply</button>
-        </form>
+                <input
+                  class="settings__menu__radio-btn settings__menu__radio-btn--color"
+                  type="radio"
+                  name="colors"
+                  id="color-btn-2"
+                  value="2"
+                />
+                <label for="color-btn-2" class="color-label color-label-2">
+                  <svg class="icons"><use href="#check"></use></svg>
+                </label>
+
+                <input
+                  class="settings__menu__radio-btn settings__menu__radio-btn--color"
+                  type="radio"
+                  name="colors"
+                  id="color-btn-3"
+                  value="3"
+                />
+                <label for="color-btn-3" class="color-label color-label-3">
+                  <svg class="icons"><use href="#check"></use></svg>
+                </label>
+              </div>
+            </fieldset>
+            <button class="btn btn--settings">Apply</button>
+          </form>
+        </div>
       </div>
       <div class="overlay hidden"></div>
     </nav>
@@ -162,6 +265,7 @@
     <!-- <svg class="icons"><use href="#icon-close"></use></svg> -->
     <!-- <svg class="icons"><use href="#icon-arrow-up"></use></svg> -->
     <!-- <svg class="icons"><use href="#icon-arrow-down"></use></svg> -->
+    <!-- <svg class="icons"><use href="#check"></use></svg> -->
 
     <svg xmlns="http://www.w3.org/2000/svg" style="display: none">
       <symbol id="logo" viewBox="0 0 153 32">
@@ -212,6 +316,23 @@
           stroke-opacity=".25"
           stroke-width="2"
           d="M1 1l6 4 6-4"
+        />
+      </symbol>
+    </svg>
+
+    <svg xmlns="http://www.w3.org/2000/svg" style="display: none">
+      <symbol
+        id="check"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke-width="1.5"
+        stroke="currentColor"
+        class="w-6 h-6"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M4.5 12.75l6 6 9-13.5"
         />
       </symbol>
     </svg>
