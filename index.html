@@ -26,41 +26,42 @@
       <svg class="header__logo"><use href="#logo"></use></svg>
     </header>
     <nav class="modus-switch">
-      <div class="btn btn--active">
+      <button class="btn btn--active" id="pomodoroBtn" value="pomodoro">
         <p class="body-1">pomodoro</p>
-      </div>
-      <div class="btn">
+      </button>
+      <button class="btn" id="shortBreakBtn" value="shortBreak">
         <p class="body-1">short break</p>
-      </div>
-      <div class="btn">
+      </button>
+      <button class="btn" id="longBreakBtn" value="longBreak">
         <p class="body-1">long break</p>
-      </div>
+      </button>
     </nav>
 
     <main class="timer">
-      <div class="timer__inner">
+      <div class="timer__inner" tabindex="0">
         <svg class="timer__circle">
           <path id="timer-arc" d="" />
         </svg>
         <div class="timer__time">
-          <h1 class="heading-1">17:59</h1>
+          <h1 class="heading-1" id="time">25:00</h1>
         </div>
         <div class="timer__status">
           <!-- start pause restart -->
           <h3 class="heading-3" id="timer__status">restart</h3>
-          <audio preload="auto" class="timer__audio">
+          <!-- <audio preload="auto" class="timer__audio">
             <source
               src="./assets/singing-bowl-strike-sound-84682.mp3"
-              type="audio/aac"
+              type="audio/mp3"
             />
-          </audio>
+          </audio> -->
         </div>
       </div>
     </main>
 
     <nav class="settings">
-      <svg class="settings__icon"><use href="#settings"></use></svg>
-
+      <button class="settings__open">
+        <svg class="settings__icon"><use href="#settings"></use></svg>
+      </button>
       <div class="hidden" id="settings-hide">
         <div class="settings__menu">
           <div
@@ -158,10 +159,10 @@
                   max="20"
                   list="reasonable-long-breaks"
                 />
-                <svg class="icons" id="short-break-up">
+                <svg class="icons" id="long-break-up">
                   <use href="#icon-arrow-up"></use>
                 </svg>
-                <svg class="icons" id="short-break-down">
+                <svg class="icons" id="long-break-down">
                   <use href="#icon-arrow-down"></use>
                 </svg>
               </div>
@@ -177,36 +178,43 @@
               </legend>
               <div class="settings__menu__radio-group">
                 <input
-                  class="settings__menu__radio-btn"
+                  class="settings__menu__radio-btn font-btn"
                   type="radio"
                   name="fonts"
                   id="font-btn-1"
-                  value="1"
+                  value="font-1"
                   checked
                 />
-                <label for="font-btn-1" class="font-label font-label font-1"
+                <label
+                  tabindex="0"
+                  for="font-btn-1"
+                  class="font-label font-label font-1"
                   >Aa</label
                 >
-
                 <input
-                  class="settings__menu__radio-btn"
+                  class="settings__menu__radio-btn font-btn"
                   type="radio"
                   name="fonts"
                   id="font-btn-2"
-                  value="2"
+                  value="font-2"
                 />
-                <label for="font-btn-2" class="font-label font-label font-2"
+                <label
+                  tabindex="0"
+                  for="font-btn-2"
+                  class="font-label font-label font-2"
                   >Aa</label
                 >
-
                 <input
-                  class="settings__menu__radio-btn"
+                  class="settings__menu__radio-btn font-btn"
                   type="radio"
                   name="fonts"
                   id="font-btn-3"
-                  value="3"
+                  value="font-3"
                 />
-                <label for="font-btn-3" class="font-label font-label font-3"
+                <label
+                  tabindex="0"
+                  for="font-btn-3"
+                  class="font-label font-label font-3"
                   >Aa</label
                 >
               </div>
@@ -222,32 +230,42 @@
                   type="radio"
                   name="colors"
                   id="color-btn-1"
-                  value="1"
+                  value="theme-1"
                   checked
                 />
-                <label for="color-btn-1" class="color-label color-label-1">
+                <label
+                  tabindex="0"
+                  for="color-btn-1"
+                  class="color-label color-label-1"
+                >
                   <svg class="icons"><use href="#check"></use></svg>
                 </label>
-
                 <input
                   class="settings__menu__radio-btn settings__menu__radio-btn--color"
                   type="radio"
                   name="colors"
                   id="color-btn-2"
-                  value="2"
+                  value="theme-2"
                 />
-                <label for="color-btn-2" class="color-label color-label-2">
+                <label
+                  tabindex="0"
+                  for="color-btn-2"
+                  class="color-label color-label-2"
+                >
                   <svg class="icons"><use href="#check"></use></svg>
                 </label>
-
                 <input
                   class="settings__menu__radio-btn settings__menu__radio-btn--color"
                   type="radio"
                   name="colors"
                   id="color-btn-3"
-                  value="3"
+                  value="theme-3"
                 />
-                <label for="color-btn-3" class="color-label color-label-3">
+                <label
+                  tabindex="0"
+                  for="color-btn-3"
+                  class="color-label color-label-3"
+                >
                   <svg class="icons"><use href="#check"></use></svg>
                 </label>
               </div>

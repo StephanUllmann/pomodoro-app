@@ -23,7 +23,7 @@
   --color-theme: #70f3f8; }
 
 .theme-3 {
-  --color-themes: #d881f8; }
+  --color-theme: #d881f8; }
 
 .font-1 {
   font-family: "Kumbh Sans", sans-serif; }
@@ -36,7 +36,7 @@
 
 .heading-1 {
   font-size: 9.5rem;
-  letter-spacing: -0.5rem;
+  letter-spacing: -0.3rem;
   display: inline-block; }
 
 .heading-2 {
@@ -76,6 +76,9 @@ html {
   @media only screen and (max-width: 40em) {
     html {
       font-size: 55%; } }
+  @media only screen and (max-width: 28em) {
+    html {
+      font-size: 45%; } }
 
 body {
   display: flex;
@@ -86,6 +89,14 @@ body {
   height: 100vh;
   color: var(--color-font-display);
   position: relative; }
+
+button {
+  border: none;
+  background-color: transparent; }
+  button:focus {
+    outline: 1px solid var(--color-theme);
+    outline-offset: 3px;
+    border-radius: 23rem; }
 
 .header__logo {
   width: 15.3rem;
@@ -103,12 +114,14 @@ body {
 
 .btn {
   padding: 1.8rem 2.3rem;
+  margin: 0.3rem;
   background-color: var(--color-primary-dark);
   border-radius: 42rem;
   color: rgba(215, 224, 255, 0.4);
   cursor: pointer;
   transition: all 0.2s;
-  border: none; }
+  border: none;
+  font-family: inherit; }
   .btn:hover {
     filter: brightness(1.2); }
   .btn--active {
@@ -116,6 +129,7 @@ body {
     color: var(--color-primary); }
 
 .timer {
+  border-style: none;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -125,15 +139,19 @@ body {
   filter: drop-shadow(-5rem -5rem 10rem var(--color-shadow-top));
   position: relative;
   cursor: pointer;
-  transition: all 0.2s; }
-  .timer:hover {
+  transition: all 0.2s;
+  font-family: inherit;
+  color: inherit; }
+  .timer:hover, .timer:focus, .timer__inner:focus {
+    cursor: pointer;
+    outline: none;
     filter: drop-shadow(-5.5rem -5.5rem 12rem var(--color-shadow-top));
     filter: brightness(1.075);
     transition: all 0.2s; }
-    .timer:hover::after {
+    .timer:hover::after, .timer:focus::after, .timer__inner:focus::after {
       filter: drop-shadow(5.5rem 5.5rem 12rem var(--color-shadow-bottom));
       transition: all 0.2s; }
-    .timer:hover .timer__inner {
+    .timer:hover .timer__inner, .timer:focus .timer__inner, .timer__inner:focus .timer__inner {
       filter: brightness(1.075);
       transition: all 0.2s; }
   .timer::after {
@@ -147,6 +165,7 @@ body {
     z-index: -10;
     transition: all 0.2s; }
   .timer__inner {
+    border: none;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -156,7 +175,9 @@ body {
     border-radius: 50%;
     background-color: var(--color-primary-dark);
     position: relative;
-    transition: all 0.2s; }
+    transition: all 0.4s;
+    font-family: inherit;
+    color: inherit; }
   .timer__circle {
     position: absolute;
     height: 100%;
@@ -168,7 +189,14 @@ body {
   .timer__time {
     text-align: center; }
   .timer__status {
-    text-align: center; }
+    transform: translateX(0.75rem);
+    transition: all 0.3s; }
+
+.settings__open {
+  border: none;
+  background-color: transparent;
+  width: 3.2rem;
+  height: 3.2rem; }
 
 .settings__icon {
   width: 2.8rem;
@@ -197,7 +225,8 @@ body {
     height: 1.4rem;
     grid-column: 2 / 3;
     grid-row: 1 / 2;
-    cursor: pointer; }
+    cursor: pointer;
+    fill: black; }
   .settings__menu__form {
     padding-bottom: 2.4rem;
     position: relative; }
@@ -305,6 +334,10 @@ body {
     width: 2.2rem;
     height: 1.66rem;
     transition: all 0.2s; }
+  .font-label:focus,
+  .color-label:focus {
+    outline: 1px solid var(--color-font-display);
+    outline-offset: 4px; }
 
 .color-label-1 {
   background-color: var(--color-settings-themes-1); }
@@ -338,7 +371,6 @@ body {
 .icons {
   transition: all 0.1s; }
   .icons:hover {
-    filter: brightness(2);
     transform: scale(1.2); }
 
 #pomodoro-up {

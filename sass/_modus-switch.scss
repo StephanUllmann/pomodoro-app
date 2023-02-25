@@ -7,6 +7,7 @@
 
 .btn {
   padding: 1.8rem 2.3rem;
+  margin: 0.3rem;
   background-color: var(--color-primary-dark);
   border-radius: 42rem;
   // color: rgba(var(--color-font-display), var(--alpha));
@@ -14,6 +15,7 @@
   cursor: pointer;
   transition: all 0.2s;
   border: none;
+  font-family: inherit;
 
   &:hover {
     filter: brightness(1.2);

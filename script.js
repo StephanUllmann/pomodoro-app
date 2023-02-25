@@ -1,12 +1,45 @@
 "use strict";
 
-const timerInnerEl = document.querySelector(".timer__inner");
-const settingsIconEl = document.querySelector(".settings__icon");
+/// Elements
+/// Settings
+const settingsOpenEl = document.querySelector(".settings__open");
 const overlayEl = document.querySelector(".overlay");
 const settingsHideEl = document.getElementById("settings-hide");
+const settingsCloseEl = document.querySelector(".settings__menu-close");
+const pomodoroInputEl = document.getElementById("pomodoro-time");
+const pomodoroArrUpEl = document.getElementById("pomodoro-up");
+const pomodoroArrDownEl = document.getElementById("pomodoro-down");
+const shortBrInputEl = document.getElementById("short-break");
+const shortBrArrUpEl = document.getElementById("short-break-up");
+const shortBrArrDownEl = document.getElementById("short-break-down");
+const longBrInputEl = document.getElementById("long-break");
+const longBrArrUpEl = document.getElementById("long-break-up");
+const longBrArrDownEl = document.getElementById("long-break-down");
+const settingsInputEls = document.querySelectorAll(
+  ".settings__menu__form-group"
+);
 const applyBtnEl = document.querySelector(".btn--settings");
 
+/// Timer
+const timer = document.querySelector(".timer");
+const timerInnerEl = document.querySelector(".timer__inner");
+const timeDisplayEl = document.getElementById("time");
 const timerArcEl = document.getElementById("timer-arc");
+const timerStatusEl = document.getElementById("timer__status");
+// const bellEl = document.querySelector("timer__audio");
+const bellEl = new Audio("./assets/singing-bowl-strike-sound-84682.mp3");
+/// Arc
+const centerX = timerInnerEl.offsetWidth / 2;
+const centerY = timerInnerEl.offsetHeight / 2;
+const radius = centerX * 0.9;
+const startAngle = 0;
+const endAngle = 359.9;
+
+/// Modus Switch
+const modusEl = document.querySelector(".modus-switch");
+const pomodoroBtnEl = document.getElementById("pomodoroBtn");
+const shortBreakBtnEl = document.getElementById("shortBreakBtn");
+const longBreakBtnEl = document.getElementById("longBreakBtn");
 
 //////////////
 // Code snippet from [@opsb](https://stackoverflow.com/questions/5736398/how-to-calculate-the-svg-path-for-an-arc-of-a-circle)
@@ -45,6 +78,16 @@ function describeArc(x, y, radius, startAngle, endAngle) {
 
 // Snippet End
 
+// Helpers
+
+const minsToSec = (minutes) => minutes * 60;
+const stringifySeconds = (seconds) => {
+  const minutes = Math.floor(seconds / 60);
+  const sec =
+    String(seconds % 60).length === 1 ? `0${seconds % 60}` : `${seconds % 60}`;
+  return `${minutes}:${sec}`;
+};
+
 const openModal = function () {
   overlayEl.classList.remove("hidden");
   settingsHideEl.classList.remove("hidden");
@@ -55,37 +98,169 @@ const closeModal = function () {
   settingsHideEl.classList.add("hidden");
 };
 
-const setupListeners = function () {
-  settingsIconEl.addEventListener("click", () => {
-    openModal();
-  });
+/// App functions
 
-  overlayEl.addEventListener("click", () => {
-    closeModal();
+const INITIAL_STATE = {
+  bodyTheme: "theme-1",
+  bodyFont: "font-1",
+  pomodoro: 25,
+  shortBreak: 5,
+  longBreak: 10,
+  modus: "pomodoro",
+  fullTime: 1500,
+  secToGo: 1500,
+  active: false,
+};
+
+let intervallID;
+
+const appliedState = {
+  ...INITIAL_STATE,
+};
+
+const diminishArc = function () {
+  const newEndAngle =
+    appliedState.secToGo === 0
+      ? 359.9
+      : (appliedState.secToGo * 359.9) / appliedState.fullTime;
+  timerArcEl.setAttribute(
+    "d",
+    describeArc(centerX, centerY, radius, startAngle, newEndAngle)
+  );
+};
+
+const countDown = function () {
+  appliedState.secToGo--;
+  timeDisplayEl.textContent = stringifySeconds(appliedState.secToGo);
+};
+
+const pauseTimer = function () {
+  appliedState.active = false;
+  clearInterval(intervallID);
+  timerStatusEl.textContent = "start";
+};
+
+const startTimer = function () {
+  appliedState.active = true;
+  countDown();
+  diminishArc();
+  timerStatusEl.textContent = "pause";
+
+  intervallID = setInterval(() => {
+    if (appliedState.secToGo === 1) {
+      countDown();
+      diminishArc();
+      pauseTimer();
+      bellEl.play();
+    } else {
+      countDown();
+      diminishArc();
+    }
+  }, 1000);
+};
+
+const toggleTimer = function () {
+  if (appliedState.active) pauseTimer();
+  else startTimer();
+};
+
+const applySettings = function () {
+  appliedState.bodyTheme = document.querySelector(
+    ".settings__menu__radio-btn--color:checked"
+  ).value;
+  appliedState.bodyFont = document.querySelector(".font-btn:checked").value;
+
+  document.body.classList.remove("theme-1");
+  document.body.classList.remove("theme-2");
+  document.body.classList.remove("theme-3");
+  document.body.classList.remove("font-1");
+  document.body.classList.remove("font-2");
+  document.body.classList.remove("font-3");
+
+  document.body.classList.add(appliedState.bodyTheme);
+  document.body.classList.add(appliedState.bodyFont);
+
+  appliedState.pomodoro = +pomodoroInputEl.value;
+  appliedState.shortBreak = +shortBrInputEl.value;
+  appliedState.longBreak = +longBrInputEl.value;
+  appliedState.secToGo = minsToSec(appliedState[appliedState.modus]);
+  appliedState.fullTime = appliedState.secToGo;
+  timeDisplayEl.textContent = `${pomodoroInputEl.value}:00`;
+  timerStatusEl.textContent = "start";
+  switchModus(pomodoroBtnEl);
+};
+
+const switchModus = function (button) {
+  pauseTimer();
+  [pomodoroBtnEl, shortBreakBtnEl, longBreakBtnEl].forEach((element) =>
+    element.classList.remove("btn--active")
+  );
+  button.classList.add("btn--active");
+  appliedState.modus = button.value;
+  appliedState.secToGo = minsToSec(appliedState[appliedState.modus]);
+  appliedState.fullTime = appliedState.secToGo;
+  timeDisplayEl.textContent = stringifySeconds(appliedState.secToGo);
+  timerStatusEl.textContent = "start";
+};
+
+/// Event Listeners
+const setupListeners = function () {
+  settingsOpenEl.addEventListener("click", () => {
+    openModal();
   });
 
   applyBtnEl.addEventListener("click", (e) => {
     e.preventDefault();
     closeModal();
+    applySettings();
+  });
+
+  [settingsCloseEl, overlayEl].forEach((element) =>
+    element.addEventListener("click", () => {
+      closeModal();
+    })
+  );
+
+  window.addEventListener("keydown", (e) => {
+    const keysCloseModal = ["Escape", "Delete"];
+    // console.log(e.key);
+    if (keysCloseModal.includes(e.key)) closeModal();
+
+    if (e.key === "Enter") {
+      applySettings();
+      closeModal();
+    }
+  });
+
+  // document.addEventListener("click", (e) => {
+  //   const target = e.target.closest("input");
+  //   // console.log(target.type);
+  //   if (!target || !target.type) return;
+  //   if (target.type !== "radio") return;
+  //   console.log(target);
+  // });
+
+  modusEl.addEventListener("click", (e) => {
+    const button = e.target.closest(".btn");
+    if (!button) return;
+    switchModus(button);
   });
 
   window.addEventListener("DOMContentLoaded", function () {
-    const centerX = timerInnerEl.offsetWidth / 2;
-    const centerY = timerInnerEl.offsetHeight / 2;
-    const radius = centerX * 0.9;
-    const startAngle = 0;
-    const endAngle = 359.9;
-
     timerArcEl.setAttribute(
       "d",
       describeArc(centerX, centerY, radius, startAngle, endAngle)
     );
   });
+
+  timer.addEventListener("click", () => {
+    toggleTimer();
+  });
 };
 
 const init = function () {
   setupListeners();
-  openModal();
+  // openModal();
 };
 
 init();
