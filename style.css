@@ -136,23 +136,23 @@ button {
   min-height: 40rem;
   min-width: 40rem;
   border-radius: 50%;
+  -webkit-filter: drop-shadow(-5rem -5rem 10rem var(--color-shadow-top));
   filter: drop-shadow(-5rem -5rem 10rem var(--color-shadow-top));
   position: relative;
   cursor: pointer;
   transition: all 0.2s;
   font-family: inherit;
   color: inherit; }
-  .timer:hover, .timer:focus, .timer__inner:focus {
+  .timer:hover {
     cursor: pointer;
     outline: none;
+    -webkit-filter: drop-shadow(-5.5rem -5.5rem 12rem var(--color-shadow-top));
     filter: drop-shadow(-5.5rem -5.5rem 12rem var(--color-shadow-top));
     filter: brightness(1.075);
     transition: all 0.2s; }
-    .timer:hover::after, .timer:focus::after, .timer__inner:focus::after {
+    .timer:hover::after {
+      -webkit-filter: drop-shadow(5.5rem 5.5rem 12rem var(--color-shadow-bottom));
       filter: drop-shadow(5.5rem 5.5rem 12rem var(--color-shadow-bottom));
-      transition: all 0.2s; }
-    .timer:hover .timer__inner, .timer:focus .timer__inner, .timer__inner:focus .timer__inner {
-      filter: brightness(1.075);
       transition: all 0.2s; }
   .timer::after {
     content: "";
@@ -161,6 +161,7 @@ button {
     height: 100%;
     width: 100%;
     border-radius: 50%;
+    -webkit-filter: drop-shadow(5rem 5rem 10rem var(--color-shadow-bottom));
     filter: drop-shadow(5rem 5rem 10rem var(--color-shadow-bottom));
     z-index: -10;
     transition: all 0.2s; }

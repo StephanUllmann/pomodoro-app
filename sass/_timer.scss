@@ -6,6 +6,7 @@
   min-height: 40rem;
   min-width: 40rem;
   border-radius: 50%;
+  -webkit-filter: drop-shadow(-5rem -5rem 10rem var(--color-shadow-top));
   filter: drop-shadow(-5rem -5rem 10rem var(--color-shadow-top));
   position: relative;
   cursor: pointer;
@@ -13,26 +14,30 @@
   font-family: inherit;
   color: inherit;
 
-  &:hover,
-  &:focus,
-  &__inner:focus {
+  // &:focus,
+  // &__inner:focus {
+  &:hover {
     cursor: pointer;
 
     outline: none;
+    -webkit-filter: drop-shadow(-5.5rem -5.5rem 12rem var(--color-shadow-top));
     filter: drop-shadow(-5.5rem -5.5rem 12rem var(--color-shadow-top));
     filter: brightness(1.075);
     transition: all 0.2s;
 
     &::after {
+      -webkit-filter: drop-shadow(
+        5.5rem 5.5rem 12rem var(--color-shadow-bottom)
+      );
       filter: drop-shadow(5.5rem 5.5rem 12rem var(--color-shadow-bottom));
       //   filter: brightness(1.1);
       transition: all 0.2s;
     }
 
-    & .timer__inner {
-      filter: brightness(1.075);
-      transition: all 0.2s;
-    }
+    // & .timer__inner {
+    // filter: brightness(1.075);
+    // transition: all 0.2s;
+    // }
   }
 
   &::after {
@@ -42,6 +47,7 @@
     height: 100%;
     width: 100%;
     border-radius: 50%;
+    -webkit-filter: drop-shadow(5rem 5rem 10rem var(--color-shadow-bottom));
     filter: drop-shadow(5rem 5rem 10rem var(--color-shadow-bottom));
     z-index: -10;
     transition: all 0.2s;

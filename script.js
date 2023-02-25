@@ -137,7 +137,12 @@ const countDown = function () {
 const pauseTimer = function () {
   appliedState.active = false;
   clearInterval(intervallID);
-  timerStatusEl.textContent = "start";
+
+  timerStatusEl.textContent = "restart";
+  if (!appliedState.secToGo) {
+    if (appliedState.modus === "pomodoro") timerStatusEl.textContent = "break";
+    else timerStatusEl.textContent = "pomodoro";
+  }
 };
 
 const startTimer = function () {
@@ -149,9 +154,9 @@ const startTimer = function () {
   intervallID = setInterval(() => {
     if (appliedState.secToGo === 1) {
       countDown();
+      bellEl.play();
       diminishArc();
       pauseTimer();
-      bellEl.play();
     } else {
       countDown();
       diminishArc();
@@ -232,13 +237,19 @@ const setupListeners = function () {
     }
   });
 
-  // document.addEventListener("click", (e) => {
-  //   const target = e.target.closest("input");
-  //   // console.log(target.type);
-  //   if (!target || !target.type) return;
-  //   if (target.type !== "radio") return;
-  //   console.log(target);
-  // });
+  [pomodoroArrUpEl, shortBrArrUpEl, longBrArrUpEl].forEach((element) =>
+    element.addEventListener("click", (e) => {
+      const inputEl = e.target.closest("svg").nextSibling.nextSibling;
+      inputEl.value = +inputEl.value < 46 ? +inputEl.value + 1 : inputEl.value;
+    })
+  );
+
+  [pomodoroArrDownEl, shortBrArrDownEl, longBrArrDownEl].forEach((element) =>
+    element.addEventListener("click", (e) => {
+      const inputEl = e.target.closest("svg").previousSibling.previousSibling;
+      inputEl.value = +inputEl.value > 1 ? +inputEl.value - 1 : inputEl.value;
+    })
+  );
 
   modusEl.addEventListener("click", (e) => {
     const button = e.target.closest(".btn");
