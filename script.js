@@ -26,7 +26,6 @@ const timerInnerEl = document.querySelector(".timer__inner");
 const timeDisplayEl = document.getElementById("time");
 const timerArcEl = document.getElementById("timer-arc");
 const timerStatusEl = document.getElementById("timer__status");
-// const bellEl = document.querySelector("timer__audio");
 const bellEl = new Audio("./assets/singing-bowl-strike-sound-84682.mp3");
 /// Arc
 const centerX = timerInnerEl.offsetWidth / 2;
@@ -272,7 +271,6 @@ const setupListeners = function () {
 const init = function () {
   document.body.style.height = window.innerHeight;
   setupListeners();
-  // openModal();
 };
 
 init();
