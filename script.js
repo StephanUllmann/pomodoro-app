@@ -270,6 +270,7 @@ const setupListeners = function () {
 };
 
 const init = function () {
+  document.body.style.height = window.innerHeight;
   setupListeners();
   // openModal();
 };
