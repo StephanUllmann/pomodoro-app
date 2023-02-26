@@ -106,8 +106,9 @@ const INITIAL_STATE = {
   shortBreak: 5,
   longBreak: 10,
   modus: "pomodoro",
-  fullTime: 1500,
+  fullTime: 15000,
   secToGo: 1500,
+  tenthSecToGo: 15000,
   active: false,
 };
 
@@ -119,9 +120,9 @@ const appliedState = {
 
 const diminishArc = function () {
   const newEndAngle =
-    appliedState.secToGo === 0
+    appliedState.tenthSecToGo === 0
       ? 359.9
-      : (appliedState.secToGo * 359.9) / appliedState.fullTime;
+      : (appliedState.tenthSecToGo * 359.9) / appliedState.fullTime;
   timerArcEl.setAttribute(
     "d",
     describeArc(centerX, centerY, radius, startAngle, newEndAngle)
@@ -129,8 +130,11 @@ const diminishArc = function () {
 };
 
 const countDown = function () {
-  appliedState.secToGo--;
-  timeDisplayEl.textContent = stringifySeconds(appliedState.secToGo);
+  appliedState.tenthSecToGo--;
+  if (appliedState.tenthSecToGo % 10 === 0) {
+    appliedState.secToGo--;
+    timeDisplayEl.textContent = stringifySeconds(appliedState.secToGo);
+  }
 };
 
 const pauseTimer = function () {
@@ -151,7 +155,7 @@ const startTimer = function () {
   timerStatusEl.textContent = "pause";
 
   intervallID = setInterval(() => {
-    if (appliedState.secToGo === 1) {
+    if (appliedState.tenthSecToGo === 1) {
       countDown();
       bellEl.play();
       diminishArc();
@@ -160,7 +164,7 @@ const startTimer = function () {
       countDown();
       diminishArc();
     }
-  }, 1000);
+  }, 100);
 };
 
 const toggleTimer = function () {
@@ -188,7 +192,8 @@ const applySettings = function () {
   appliedState.shortBreak = +shortBrInputEl.value;
   appliedState.longBreak = +longBrInputEl.value;
   appliedState.secToGo = minsToSec(appliedState[appliedState.modus]);
-  appliedState.fullTime = appliedState.secToGo;
+  appliedState.fullTime = appliedState.secToGo * 10;
+  appliedState.tenthSecToGo = appliedState.fullTime;
   timeDisplayEl.textContent = `${pomodoroInputEl.value}:00`;
   timerStatusEl.textContent = "start";
   switchModus(pomodoroBtnEl);
@@ -202,7 +207,7 @@ const switchModus = function (button) {
   button.classList.add("btn--active");
   appliedState.modus = button.value;
   appliedState.secToGo = minsToSec(appliedState[appliedState.modus]);
-  appliedState.fullTime = appliedState.secToGo;
+  appliedState.fullTime = appliedState.secToGo * 10;
   timeDisplayEl.textContent = stringifySeconds(appliedState.secToGo);
   timerStatusEl.textContent = "start";
 };
