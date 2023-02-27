@@ -208,6 +208,7 @@ const switchModus = function (button) {
   appliedState.modus = button.value;
   appliedState.secToGo = minsToSec(appliedState[appliedState.modus]);
   appliedState.fullTime = appliedState.secToGo * 10;
+  appliedState.tenthSecToGo = appliedState.fullTime;
   timeDisplayEl.textContent = stringifySeconds(appliedState.secToGo);
   timerStatusEl.textContent = "start";
 };
@@ -269,7 +270,10 @@ const setupListeners = function () {
   });
 
   timer.addEventListener("click", () => {
-    toggleTimer();
+    if (timerStatusEl.textContent === "break") switchModus(shortBreakBtnEl);
+    else if (timerStatusEl.textContent === "pomodoro")
+      switchModus(pomodoroBtnEl);
+    else toggleTimer();
   });
 };
 

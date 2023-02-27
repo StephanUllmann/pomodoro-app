@@ -154,6 +154,8 @@ button {
       -webkit-filter: drop-shadow(5.5rem 5.5rem 12rem var(--color-shadow-bottom));
       filter: drop-shadow(5.5rem 5.5rem 12rem var(--color-shadow-bottom));
       transition: all 0.2s; }
+    .timer:hover:hover .timer__inner .timer__status {
+      color: var(--color-theme); }
   .timer::after {
     content: "";
     position: absolute;

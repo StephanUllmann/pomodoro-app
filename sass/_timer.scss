@@ -34,6 +34,10 @@
       transition: all 0.2s;
     }
 
+    &:hover .timer__inner .timer__status {
+      color: var(--color-theme);
+    }
+
     // & .timer__inner {
     // filter: brightness(1.075);
     // transition: all 0.2s;
