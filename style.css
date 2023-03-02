@@ -190,7 +190,11 @@ button {
     stroke-linecap: round;
     fill: none; }
   .timer__time {
-    text-align: center; }
+    display: grid;
+    grid-template-columns: max-content 2rem 10.75rem;
+    justify-items: center; }
+    .timer__time > h1 {
+      display: block; }
   .timer__status {
     transform: translateX(0.75rem);
     transition: all 0.3s; }

@@ -84,11 +84,15 @@
   }
 
   &__time {
-    text-align: center;
+    display: grid;
+    grid-template-columns: max-content 2rem 10.75rem;
+    justify-items: center;
+    & > h1 {
+      display: block;
+    }
   }
 
   &__status {
-    // text-align: center;
     transform: translateX(0.75rem);
     transition: all 0.3s;
   }

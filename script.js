@@ -24,6 +24,9 @@ const applyBtnEl = document.querySelector(".btn--settings");
 const timer = document.querySelector(".timer");
 const timerInnerEl = document.querySelector(".timer__inner");
 const timeDisplayEl = document.getElementById("time");
+const timeMinutesEl = document.getElementById("time__minutes");
+const timeSecondsEl = document.getElementById("time__seconds");
+
 const timerArcEl = document.getElementById("timer-arc");
 const timerStatusEl = document.getElementById("timer__status");
 const bellEl = new Audio("./assets/singing-bowl-strike-sound-84682.mp3");
@@ -83,7 +86,9 @@ const stringifySeconds = (seconds) => {
   const minutes = Math.floor(seconds / 60);
   const sec =
     String(seconds % 60).length === 1 ? `0${seconds % 60}` : `${seconds % 60}`;
-  return `${minutes}:${sec}`;
+  // return `${minutes}:${sec}`;
+  appliedState.displayMins = String(minutes);
+  appliedState.displaySec = String(sec);
 };
 
 const openModal = function () {
@@ -109,6 +114,8 @@ const INITIAL_STATE = {
   secToGo: 1500,
   tenthSecToGo: 15000,
   active: false,
+  displayMins: "25",
+  displaySec: "00",
 };
 
 let intervallID;
@@ -132,7 +139,10 @@ const countDown = function () {
   appliedState.tenthSecToGo--;
   if (appliedState.tenthSecToGo % 10 === 0) {
     appliedState.secToGo--;
-    timeDisplayEl.textContent = stringifySeconds(appliedState.secToGo);
+    // timeDisplayEl.textContent = stringifySeconds(appliedState.secToGo);
+    stringifySeconds(appliedState.secToGo);
+    timeMinutesEl.textContent = appliedState.displayMins;
+    timeSecondsEl.textContent = appliedState.displaySec;
   }
 };
 
@@ -209,7 +219,10 @@ const switchModus = function (button) {
   appliedState.secToGo = minsToSec(appliedState[appliedState.modus]);
   appliedState.fullTime = appliedState.secToGo * 10;
   appliedState.tenthSecToGo = appliedState.fullTime;
-  timeDisplayEl.textContent = stringifySeconds(appliedState.secToGo);
+  // timeDisplayEl.textContent = stringifySeconds(appliedState.secToGo);
+  stringifySeconds(appliedState.secToGo);
+  timeMinutesEl.textContent = appliedState.displayMins;
+  timeSecondsEl.textContent = appliedState.displaySec;
   timerStatusEl.textContent = "start";
 };
 
