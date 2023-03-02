@@ -28,9 +28,9 @@ const timerArcEl = document.getElementById("timer-arc");
 const timerStatusEl = document.getElementById("timer__status");
 const bellEl = new Audio("./assets/singing-bowl-strike-sound-84682.mp3");
 /// Arc
-const centerX = timerInnerEl.offsetWidth / 2;
-const centerY = timerInnerEl.offsetHeight / 2;
-const radius = centerX * 0.9;
+let centerX = timerInnerEl.offsetWidth / 2;
+let centerY = timerInnerEl.offsetHeight / 2;
+let radius = centerX * 0.9;
 const startAngle = 0;
 const endAngle = 359.9;
 
@@ -71,7 +71,6 @@ function describeArc(x, y, radius, startAngle, endAngle) {
     end.x,
     end.y,
   ].join(" ");
-
   return d;
 }
 
@@ -118,7 +117,7 @@ const appliedState = {
   ...INITIAL_STATE,
 };
 
-const diminishArc = function () {
+const updateArc = function () {
   const newEndAngle =
     appliedState.tenthSecToGo === 0
       ? 359.9
@@ -151,18 +150,19 @@ const pauseTimer = function () {
 const startTimer = function () {
   appliedState.active = true;
   countDown();
-  diminishArc();
+  updateArc();
   timerStatusEl.textContent = "pause";
 
   intervallID = setInterval(() => {
     if (appliedState.tenthSecToGo === 1) {
       countDown();
       bellEl.play();
-      diminishArc();
+      updateArc();
+
       pauseTimer();
     } else {
       countDown();
-      diminishArc();
+      updateArc();
     }
   }, 100);
 };
@@ -233,7 +233,6 @@ const setupListeners = function () {
 
   window.addEventListener("keydown", (e) => {
     const keysCloseModal = ["Escape", "Delete"];
-    // console.log(e.key);
     if (keysCloseModal.includes(e.key)) closeModal();
 
     if (e.key === "Enter") {
@@ -268,6 +267,18 @@ const setupListeners = function () {
       describeArc(centerX, centerY, radius, startAngle, endAngle)
     );
   });
+
+  const resizeObserver = new ResizeObserver((e) => {
+    for (const entry of e) {
+      if (!entry.target === ".inner__timer") return;
+      centerX = entry.contentRect.width / 2;
+      centerY = entry.contentRect.height / 2;
+      radius = centerX * 0.9;
+      updateArc();
+    }
+  });
+
+  resizeObserver.observe(timerInnerEl);
 
   timer.addEventListener("click", () => {
     if (timerStatusEl.textContent === "break") switchModus(shortBreakBtnEl);
